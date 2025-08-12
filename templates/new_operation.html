@@ -1,0 +1,21 @@
+
+{% extends "base.html" %}
+{% block content %}
+<h2>Ajouter une nouvelle opération</h2>
+<form method="post" class="mt-4">
+    <div class="mb-3">
+        <label for="nom_operation" class="form-label">Nom de l'opération</label>
+        <input type="text" class="form-control" name="nom_operation" required>
+    </div>
+    <div class="mb-3">
+        <label for="poste" class="form-label">Poste</label>
+        <input type="text" class="form-control" name="poste" required>
+    </div>
+    <div class="mb-3">
+        <label for="operateur" class="form-label">Opérateur</label>
+        <input type="text" class="form-control" name="operateur" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+    <a href="/kanban" class="btn btn-secondary">Annuler</a>
+</form>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2>Tableau de Bord</h2>
+<div class="dashboard-cards">
+    <div class="card">Total : <span>{{ total }}</span></div>
+    <div class="card">À faire : <span>{{ a_faire }}</span></div>
+    <div class="card">En cours : <span>{{ en_cours }}</span></div>
+    <div class="card">Contrôle : <span>{{ controle }}</span></div>
+    <div class="card">Terminé : <span>{{ termine }}</span></div>
+</div>
+{% endblock %}

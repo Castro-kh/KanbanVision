@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Modifier l'opération{% endblock %}
+{% block content %}
+<h2 class="mb-3">Modifier l'opération #{{ op.id }}</h2>
+
+<form method="POST" class="form-container" style="max-width:700px">
+  <label>Nom de l'opération</label>
+  <select name="nom_operation" class="form-control" required>
+    {% set ops = ['Débitage','Assemblage','Soudage','Travaux de finition'] %}
+    {% for o in ops %}
+      <option value="{{ o }}" {% if op.nom_operation == o %}selected{% endif %}>{{ o }}</option>
+    {% endfor %}
+  </select>
+
+  <label class="mt-2">Poste</label>
+  <input type="text" name="poste" class="form-control" value="{{ op.poste }}" required>
+
+  <label class="mt-2">Opérateur</label>
+  <input type="text" name="operateur" class="form-control" value="{{ op.operateur }}" required>
+
+  <label class="mt-2">Statut</label>
+  <select name="statut" class="form-control" required>
+    {% for s in ['À faire','En cours','Contrôle','Terminé'] %}
+      <option value="{{ s }}" {% if op.statut == s %}selected{% endif %}>{{ s }}</option>
+    {% endfor %}
+  </select>
+
+  <div class="d-flex gap-2 mt-3">
+    <button class="btn btn-primary">Enregistrer</button>
+    <a href="{{ url_for('admin_page') }}" class="btn btn-secondary">Annuler</a>
+  </div>
+</form>
+{% endblock %}

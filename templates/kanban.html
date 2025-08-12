@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Espace Opérateur{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Espace Opérateur - {{ current_user.username }}</h2>
+
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">➕ Nouvelle opération</div>
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('new_operation') }}">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="nom_operation">Nom de l'opération</label>
+                        <select name="nom_operation" class="form-control" required>
+                            <option value="débitage">Débitage</option>
+                            <option value="assemblage">Assemblage</option>
+                            <option value="soudage">Soudage</option>
+                            <option value="travaux de finition">Travaux de finition</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="poste">Poste</label>
+                        <input type="text" name="poste" class="form-control" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success mt-3">➕ Ajouter l'opération</button>
+            </form>
+        </div>
+    </div>
+
+    <h4 class="mb-3">📋 Mes opérations</h4>
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Opération</th>
+                <th>Poste</th>
+                <th>Statut</th>
+                <th>Début</th>
+                <th>Fin</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for op in operations %}
+            <tr>
+                <td>{{ op.id }}</td>
+                <td>{{ op.nom_operation }}</td>
+                <td>{{ op.poste }}</td>
+                <td>{{ op.statut }}</td>
+                <td>{{ op.debut.strftime('%Y-%m-%d %H:%M') if op.debut else '' }}</td>
+                <td>{{ op.fin.strftime('%Y-%m-%d %H:%M') if op.fin else '' }}</td>
+                <td>
+                    {% if op.statut == 'À faire' %}
+                    <a href="{{ url_for('start_operation', op_id=op.id) }}" class="btn btn-sm btn-primary">▶️ Démarrer</a>
+                    {% elif op.statut in ['En cours', 'Contrôle'] %}
+                    <a href="{{ url_for('finish_operation', op_id=op.id) }}" class="btn btn-sm btn-success">✅ Terminer</a>
+                    {% else %}
+                    <span class="text-muted">✔️ Terminé</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

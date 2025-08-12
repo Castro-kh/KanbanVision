@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Créer un utilisateur{% endblock %}
+{% block content %}
+<h2>Créer un nouvel utilisateur</h2>
+
+<form method="POST" action="{{ url_for('create_user') }}" class="form-container">
+    <label for="username">Nom d'utilisateur :</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Mot de passe :</label>
+    <input type="password" id="password" name="password" required>
+
+    <label for="role">Rôle :</label>
+    <select id="role" name="role">
+        <option value="admin">Admin</option>
+        <option value="operateur">Opérateur</option>
+    </select>
+
+    <button type="submit" class="btn btn-primary">Créer</button>
+</form>
+{% endblock %}

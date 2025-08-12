@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Kanban App{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+    <div class="navbar-container">
+        <a href="{{ url_for('index') }}" class="navbar-logo">KanbanApp</a>
+        {% if current_user.is_authenticated %}
+        <ul class="navbar-links">
+            {% if current_user.role == 'admin' %}
+                <li><a href="{{ url_for('admin_page') }}">Espace Admin</a></li>
+                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li><a href="{{ url_for('create_user') }}">Créer Utilisateur</a></li>
+            {% elif current_user.role == 'operateur' %}
+                <li><a href="{{ url_for('kanban') }}">Espace Opérateur</a></li>
+            {% endif %}
+            <li><a href="{{ url_for('logout') }}" class="logout-btn">Déconnexion</a></li>
+        </ul>
+        {% endif %}
+    </div>
+</nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
